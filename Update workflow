@@ -1,10 +1,7 @@
-.github/workflows/android_zombie.yml
 name: Build Zombie Monkeys AAB
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
   workflow_dispatch:
 
@@ -14,10 +11,10 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4 # Aktualisiert auf v4
     
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5 # Aktualisiert auf v5
       with:
         python-version: '3.10'
     
@@ -25,13 +22,11 @@ jobs:
       uses: ArtemSBulgakov/buildozer-action@v1
       id: buildozer
       with:
-        # 'release' erzeugt das AAB-Format
         command: buildozer android release
         buildozer_version: stable
     
     - name: Upload AAB
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # HIER war der Fehler: Geändert auf v4
       with:
-        name: ZombieMonkeys-AAB-File
-        # Sucht im bin-Ordner nach der fertigen .aab Datei
+        name: ZombieMonkeys-AAB
         path: bin/*.aab
